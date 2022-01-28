@@ -85,8 +85,8 @@ class User(db.Model):
 
 @app.route('/OAuth/<string:Token>', methods=['GET', 'POST'])
 def OAuth(Token):
-    data = jwt.decode(Token, app.config['SECRET_KEY'], algorithms=["HS256"])
     try:
+        data = jwt.decode(Token, app.config['SECRET_KEY'], algorithms=["HS256"])
         email = data['email']
         password = data['password']
         N = User.query.filter_by(email=email)
