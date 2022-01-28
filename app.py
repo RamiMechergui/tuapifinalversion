@@ -34,6 +34,7 @@ def token_required(f):
       # returns the current logged in users contex to the routes
       return f(current_user, *args, **kwargs)
    return decorated
+
 class History(db.Model):
     Transaction_ID = db.Column(db.Integer, primary_key= True, unique=True, nullable=False, autoincrement=True)
     Access_Token = db.Column(db.String(20), unique=False, nullable=True)
@@ -118,7 +119,7 @@ def index():  # put application's code here
 
 @app.route('/<string:Any_Word>',methods=['GET','POST'])
 def k(Any_Word):
-    if session.get('Token') != None:
+    if session.get('Token') != None and Any_Word != Sign_Up and Any_Word != login :
         x = "/OAuth/{}".format(session.get('Token'))
         try :
            return redirect(x)
@@ -160,7 +161,7 @@ def login():
             return redirect(x)
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
-    return make_response(render_template('login.html', form=form, Title="Login"))
+    return make_response(render_template('Login.html', form=form, Title="Login"))
 
 @app.route('/log_out', methods=['POST'])
 def log_out():
