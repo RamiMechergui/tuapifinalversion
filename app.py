@@ -1,4 +1,4 @@
-from forms import LoginForm,Admin_Login,N_Student_Per_University_Reg
+from forms import LoginForm,Admin_Login,N_Student_Per_University_Reg,RegistrationForm
 from flask import Flask, render_template, url_for, flash, redirect, make_response, session, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import jwt
