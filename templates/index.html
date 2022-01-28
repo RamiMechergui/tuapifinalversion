@@ -1,0 +1,589 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Tabs Content -->
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Overview
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                     data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        The TU API is used to get data about Tunisian Universities . Our API returns JSON-encoded
+                        responses,
+                        and uses standard HTTP response codes and authentication.(Source of Data www.mes.tn )
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                aria-controls="flush-collapseTwo">
+                            How to use TU API
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                         data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    1- First of all you have to sign up as shown below
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{ url_for('static',filename='Sign Up.PNG') }}" class="img-fluid"
+                                         width="200"
+                                         height="200">
+                                </div>
+
+                            </div>
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    2- Then , Login
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{ url_for('static',filename='Login.PNG') }}" class="img-fluid"
+                                         width="200" height="200">
+                                </div>
+
+                            </div>
+
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    3- After Logging in,press on Get My Access token
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{ url_for('static',filename='Get token.PNG') }}" class="img-fluid"
+                                         width="200"
+                                         height="200">
+                                </div>
+
+                            </div>
+
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    4- After getting your Acess Token you can use it to send request to the API
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{ url_for('static',filename='Token Window.PNG') }}" class="img-fluid"
+                                         width="200"
+                                         height="200">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                    aria-controls="flush-collapseThree">
+                                Get Access Token
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="card text-center">
+                                    <div class="card-header">
+                                        Send form based request as shown below
+                                    </div>
+                                    <div class="card-body">
+                                        <img src="{{ url_for('static',filename='form.PNG') }}" class="img-fluid"
+                                             width="800"
+                                             height="600">
+                                    </div>
+                                    <div class="card text-center">
+                                        <div class="card-header">
+                                            And Then you will get your Access Token
+                                        </div>
+                                        <div class="card-body">
+                                            <img src="{{ url_for('static',filename='Response.PNG') }}" class="img-fluid"
+                                                 width="900"
+                                                 height="800">
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> GET </span>
+                            /user/list_of_universities
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            <span>Returns the list of Tunisian universities</span>
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {"List of tunisian univeristies": [
+                                "University of Ezzitouna",
+                                "University of Tunis",
+                                "University of Tunis el manar",
+                                "University of Carthage",
+                                "University of Manouba",
+                                "University of Jendouba",
+                                "University of Sousse",
+                                "University of Monastir",
+                                "University of Kairouan",
+                                "University of Sfax",
+                                "University of Gabes",
+                                "University of Gafsa",
+                                "Directorate General for Technology Studies (DGET)",
+                                "Virtual University",
+                                ]
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> GET </span>
+                            /user/list_of_universities/UniversityName
+                        </button>
+                    </h2>
+
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            Returns the number of students with university from 2014 to 2020
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {"University of Ezzitouna": [
+                                {"2014_2015": "2443"},
+                                {"2015_2016": "2418"},
+                                {"2016_2017": "2475"},
+                                {"2017_2018": "2400"},
+                                {"2018_2019": "2566"},
+                                {"2019_2020": "2555"}]}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> GET </span>
+                            /user/rates
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            Returns the list of rates that we gathered information about
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {
+                                "List of rates": [
+                                "Success",
+                                "Drop_out",
+                                "Number of Drop_outs"
+                                ]
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> GET </span>
+                            /user/rates/:Status
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            Returns the rates of specified status from 2014 to 2019
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {"Success": [{"2014_2015": "66.1%"},
+                                {"2015_2016": "70.2%"},
+                                {"2016_2017": "70.8%"},
+                                {"2017_2018": "72.9%"},
+                                {"2018_2019": "71.1%"},
+                                {"2019_2020": "Not yet"}
+                                ]}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> GET </span>
+                            /user/rates/:status/:year1-:year2
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            Returns the rates of specified status in a specific year
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {"Success": {"2016_2017": "70.8%"}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> GET </span>
+                            /user/total_Cost_per_student
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            Returns the list of total expenditures from 2014 to 2019
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {"Total expenditures":
+                                [{"2014_2015": "1340928 TND"},
+                                {"2015_2016": "1276863 TND"},
+                                {"2016_2017": "1431661 TND"},
+                                {"2017_2018": "1486969 TND"},
+                                {"2018_2019": "1644664 TND"}]
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> GET </span>
+                            /user/total_Cost_per_student/:year1-:year2
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            Returns the total expenditure in a specific year
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {"Total expenditures": [
+                                {"2015_2016": "1276863 TND"}]
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed d-flex justify-content-around" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> GET </span>
+                            <p>/user/Total_Number_Of_Student</p>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            Returns the number of students in public and private from 2014 to 2020
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {"Total Number of students(Public & Private)": [
+                                {"2014_2015": "322625"},
+                                {"2015_2016": "294486"},
+                                {"2016_2017": "282204"},
+                                {"2017_2018": "272261"},
+                                {"2018_2019": "267154"},
+                                {"2019_2020": "269424"}
+                                ]
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> GET </span>
+                            /user/Prop-private-total-student
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            Returns the proportion of students in the private sector in relation to total number
+                        </div>
+                        <br>
+                        <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                            Response
+                        </div>
+                        <br>
+                        <br>
+                        <div class="badge bg-warning text-wrap  me-2">
+                            {"Proportion of students in the private sector in relation to total student": [
+                            {"2014_2015": "9,4%"},
+                            {"2015_2016": "10,4%"},
+                            {"2016_2017": "11,1%"},
+                            {"2017_2018": "11,5%"},
+                            {"2018_2019": "12,5%"},
+                            {"2019_2020": "12,9%"}
+                            ]
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> GET </span>
+                            /user/N-Of-Stu-per-100-student
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            Get the number of students per 100 thousands inhabitant
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {"Number of students per 100 thousand
+                                inhabitants": [
+                                {"2014_2015": "2892"},
+                                {"2015_2016": "2622"},
+                                {"2016_2017": "2467"},
+                                {"2017_2018": "2351"},
+                                {"2018_2019": "2279"},
+                                {"2019_2020": "2301"}
+                                ]
+                                }
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> Delete </span>
+                            /admin/users/delete?email=example@gmail.com
+
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            <span>Delete a user with the specified email  </span>
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {
+                                "Response": "User Deleted Sucessfully"
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> PUT </span>
+                            /admin/University_Name?year1=2015
+                            &year2=2016
+                            &New_Stat=2480
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            <span>Update the data of university table  </span>
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {
+                                "response": "Item modified
+                                Sucessfully"
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            <span class="badge bg-primary me-2"> PUT </span>
+                            /admin/rates/Success?
+                            year1=2016&
+                            year2=2017&
+                            New_Stat=0
+
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="badge bg-success text-wrap me-2" style="width: 6rem;">
+                                Description
+                            </div>
+                            <span> Update the data of rates table  </span>
+                            <br>
+                            <div class="badge bg-warning text-wrap me-2" style="width: 6rem;">
+                                Response
+                            </div>
+                            <br>
+                            <br>
+                            <div class="badge bg-warning text-wrap  me-2">
+                                {
+                                "response": "Item modified
+                                Sucessfully"
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    </div>
+{% endblock content %}
+
