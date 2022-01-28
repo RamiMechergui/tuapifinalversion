@@ -364,7 +364,7 @@ def Manipulate_data_2(Rates_N):
 @app.after_request
 def after_request_func(response):
     Final_Token = session.get('Token')
-    if session.get('Task_Done') == None :
+    if session.get('Task_Done'):
         session['Task_Done'] = ""
     if session.get('Token') == None :
         Final_Token = "Visitor"
@@ -374,4 +374,4 @@ def after_request_func(response):
     return response
 
 if __name__ == '__main__':
-    app.run(debug=True, use_debugger=False, use_reloader=False)
+    app.run(debug=True, use_debugger=True, use_reloader=True)
