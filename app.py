@@ -24,19 +24,15 @@ def token_required(f):
       # return 401 if token is not passed
       if not token:
          return jsonify({'message' : 'Token is missing'}), 401
-
       try:
          data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
          email = data['email']
          password = data['password']
          current_user = User.query.filter_by(email=email)
       except:
-         return jsonify({
-            'message' : 'Token is invalid'
-         }), 401
+         return jsonify({'message' : 'Token is invalid'}), 401
       # returns the current logged in users contex to the routes
       return f(current_user, *args, **kwargs)
-
    return decorated
 class History(db.Model):
     Transaction_ID = db.Column(db.Integer, primary_key= True, unique=True, nullable=False, autoincrement=True)
