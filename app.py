@@ -142,7 +142,7 @@ def ReturnToken():
     Email = request.form.get('email')
     Password = request.form.get('password')
     try:
-        T = User.query.filter_by(email=Email).first()
+        T=User.query.filter_by(email=Email).first()
         if T.password == Password :
             session['Task_Done'] = "GET ACCESS TOKEN SUCCESSFULLY"
             return make_response(jsonify({"Access Token" : T.Access_Token }),200)
@@ -374,4 +374,4 @@ def after_request_func(response):
     return response
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, use_debugger=False, use_reloader=False)
