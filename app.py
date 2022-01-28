@@ -102,11 +102,11 @@ def OAuth(Token):
 
 @app.route('/',methods=['GET','POST'])
 def Main():
-    if session.get('Token') != None :
-        x = "/OAuth/{}".format(session.get('Token'))
-        try :
-            return redirect(x)
-        except :
+    try:
+        if session.get('Token') != None:
+           x = "/OAuth/{}".format(session.get('Token'))
+           return redirect(x)
+    except:
             return redirect('/index')
     session['Page'] = "index"
     return redirect('/index')
@@ -118,7 +118,7 @@ def index():  # put application's code here
 
 @app.route('/<string:Any_Word>',methods=['GET','POST'])
 def k(Any_Word):
-    if session.get('Token'):
+    if session.get('Token') != None:
         x = "/OAuth/{}".format(session.get('Token'))
         try :
            return redirect(x)
