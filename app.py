@@ -97,7 +97,6 @@ def OAuth(Token):
         if N[0].email == email and N[0].password == password:
           session['Token'] = Token
           session['username'] = data['username']
-          request.headers['x-access-token'] = Token
           M = [S for S in History.query.all() if S.Access_Token == session.get('Token')]
           HS = History.query.all()
           session['Task_Done'] = "Successfully Logged in"
@@ -161,7 +160,7 @@ def login():
         if form.email.data == email and form.password.data == password:
             flash('You have been logged in!', 'success')
             x = "/OAuth/{}".format(N[0].Access_Token)
-            session['Task_Done'] = "Login Sucessfullyd"
+            session['Task_Done'] = "Login Sucessfully"
             return redirect(x)
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
