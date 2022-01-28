@@ -119,7 +119,7 @@ def index():  # put application's code here
 
 @app.route('/<string:Any_Word>',methods=['GET','POST'])
 def k(Any_Word):
-    if session.get('Token') != None and Any_Word != Sign_Up and Any_Word != login :
+    if session.get('Token') != None and Any_Word != "Sign_Up" and Any_Word != "login" :
         x = "/OAuth/{}".format(session.get('Token'))
         try :
            return redirect(x)
