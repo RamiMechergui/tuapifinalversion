@@ -211,7 +211,7 @@ def Sign_Up():
         db.session.commit()
         flash("Account created successfully")
         session['Task_Done'] = "Successfully Sign Up"
-        return redirect(url_for('login'))
+        return make_response(render_template('Login.html', form=form, Title="Login"))
     return make_response(render_template('Sign_Up.html', form=form, Title="Sign_Up"))
 
 @app.route('/user/list_of_universities', methods=['GET'])  # GET the list of Tunisian Universities
