@@ -42,8 +42,6 @@ class History(db.Model):
     Method_Used = db.Column(db.String(20), unique=False, nullable=True)
     Task_Done = db.Column(db.String(20), unique=False, nullable=True)
 
-    def __repr__(self):
-        return f"Transaction_ID : {self.Transaction_ID} Access_Token: {self.Access_Token} Creation_Date : {self.Creation_Date} :  Method_Used {self.Method_Used} Task_Done : {self.Task_Done} "
 class Private_Vs_Public(db.Model):
     N = db.Column(db.String(35), primary_key=True, unique=True, nullable=False)
     N_2014_2015 = db.Column(db.String(20), unique=False, nullable=False)
@@ -98,7 +96,7 @@ def OAuth(Token):
           HS = History.query.all()
           session['Task_Done'] = "Successfully Logged in"
           return make_response(render_template('index.html', Page="", Authenticated=True, id=N[0].id, username=N[0].username,M=M,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
-    except :
+    except:
             return make_response(redirect('/index'))
 
 @app.route('/',methods=['GET','POST'])
@@ -213,7 +211,7 @@ def Sign_Up():
         db.session.commit()
         flash("Account created successfully")
         session['Task_Done'] = "Successfully Sign Up"
-        return redirect(url_for('login', Title="Login"))
+        return redirect(url_for('login'))
     return make_response(render_template('Sign_Up.html', form=form, Title="Sign_Up"))
 
 @app.route('/user/list_of_universities', methods=['GET'])  # GET the list of Tunisian Universities
