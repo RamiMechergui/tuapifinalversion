@@ -118,17 +118,17 @@ def index():  # put application's code here
 @app.route('/<string:Any_Word>',methods=['GET','POST'])
 def k(Any_Word):
     if Any_Word == "Sign_Up" :
-        return redirect(url_for(Sign_Up))
+        return redirect(url_for('Sign_Up'))
     if Any_Word == "login" :
-        return redirect(url_for(login))
+        return redirect(url_for('login'))
     if session.get('Token') != None and Any_Word != "Sign_Up" and Any_Word != "login":
         x = "/OAuth/{}".format(session.get('Token'))
         try :
            return redirect(x)
         except :
-           return redirect(url_for(index))
+           return redirect(url_for('index'))
     session['Page'] = "index"
-    return redirect(url_for(index))
+    return redirect(url_for('index'))
 
 @app.route('/modification',methods=['GET','POST'])
 def modif():
