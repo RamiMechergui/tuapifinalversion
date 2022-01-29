@@ -130,11 +130,6 @@ def k(Any_Word):
     session['Page'] = "index"
     return redirect(url_for('index'))
 
-@app.route('/modification',methods=['GET','POST'])
-def modif():
-    db.session.query(rates).filter(rates.Status == "Sucess").update({rates.Status: "Success"})
-    db.session.commit()
-    return "done"
 
 @app.route('/GetToken',methods=['GET','POST'])
 def ReturnToken():
@@ -159,7 +154,7 @@ def login():
         if form.email.data == email and form.password.data == password:
             flash('You have been logged in!', 'success')
             x = "/OAuth/{}".format(N[0].Access_Token)
-            session['Task_Done'] = "Login Sucessfully"
+            session['Task_Done'] = "Login Successfully"
             return redirect(x)
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
@@ -201,12 +196,9 @@ def Sign_Up():
     form = RegistrationForm()
     session['Page'] = "Sign_Up"
     if form.validate_on_submit():
-        token = jwt.encode({'username': form.username.data, 'email': form.email.data, 'password': form.password.data,
-                            'exp': datetime.utcnow() + timedelta(days=180)}, app.config['SECRET_KEY'],
-                           algorithm="HS256")
+        token = jwt.encode({'username': form.username.data, 'email': form.email.data,'password': form.password.data,'exp':datetime.utcnow()+timedelta(days=180)}, app.config['SECRET_KEY'], algorithm="HS256")
         now = "{}".format(datetime.utcnow())
-        New_User = User(username=form.username.data, email=form.email.data, password=form.password.data,
-                        Access_Token=token, Creation_Date=now)
+        New_User = User(username=form.username.data, email=form.email.data, password=form.password.data,Access_Token=token, Creation_Date=now)
         db.session.add(New_User)
         db.session.commit()
         flash("Account created successfully")
