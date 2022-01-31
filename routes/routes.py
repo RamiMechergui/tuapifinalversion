@@ -87,7 +87,6 @@ def login():
            if form.email.data == email and form.password.data == password:
               flash('You have been logged in!', 'success')
               x = "/OAuth/{}".format(N[0].Access_Token)
-              session['Task_Done'] = "Login Successfully"
               return redirect(x)
         except :
              flash('Login Unsuccessful. Please check username and password', 'danger')
@@ -127,7 +126,6 @@ def Sign_Up():
         db.session.add(New_User)
         db.session.commit()
         flash("Account created successfully")
-        session['Task_Done'] = "Successfully Sign Up"
         return redirect(url_for('login'))
     return make_response(render_template('Sign_Up.html', form=form, Title="Sign_Up"))
 @token_required
@@ -203,7 +201,6 @@ def CostPerStudent(current_user, year1, year2):
         return jsonify({"Response": "Try to verify that years are consecutive and separated by - from 2014 to 2019"})
 @token_required
 def Get_Total_Number_Of_Students(current_user):
-    session['Task_Done'] = "Getting Access to total number of student statistics"
     X=Private_Vs_Public.query.all()[0]
     session['Task_Done'] = "View Total number of students"
     return jsonify({"Total Number of students(Public & Private)": [{"2014_2015": X.N_2014_2015},{"2015_2016": X.N_2015_2016},{"2016_2017": X.N_2016_2017},{"2017_2018": X.N_2017_2018},{"2018_2019": X.N_2018_2019},{"2019_2020": X.N_2019_2020}]})
@@ -211,11 +208,9 @@ def Get_Total_Number_Of_Students(current_user):
 def Get_Number(current_user):
     session['Task_Done'] = "Getting Access to Proportion of students in the private sector in relation to total student"
     X= Private_Vs_Public.query.all()[1]
-    session['Task_Done'] = "View proportion of private student comparing to total students"
     return jsonify({"Proportion of students in the private sector in relation to total student	": [{"2014_2015": X.N_2014_2015},{"2015_2016": X.N_2015_2016},{"2016_2017": X.N_2016_2017},{"2017_2018": X.N_2017_2018},{"2018_2019": X.N_2018_2019},{"2019_2020": X.N_2019_2020}]})
 @token_required
 def Get_Number_Per_100(current_user):
-    session['Task_Done'] = "View Students"
     X= Private_Vs_Public.query.all()[2]
     session['Task_Done'] = "View N-of-Stu-per-100-inhabitant"
     return jsonify({"Number of students per 100 thousand inhabitants": [{"2014_2015": X.N_2014_2015},{"2015_2016": X.N_2015_2016},{"2016_2017": X.N_2016_2017},{"2017_2018": X.N_2017_2018},{"2018_2019": X.N_2018_2019},{"2019_2020": X.N_2019_2020}]})
