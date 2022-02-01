@@ -42,10 +42,22 @@ def after_request_func(response):
      session['Task_Done'] = ""
   if session.get('Token') == None:
      Final_Token = "Visitor"
-  New_Transaction = History(Access_Token=Final_Token, Creation_Date = datetime.utcnow(), Method_Used=request.method, Task_Done=session.get('Task_Done'))
-  db.session.add(New_Transaction)
-  db.session.commit()
+  X = History.query.all()[-1]
+  if X.Task_Done != session.get('Task_Done') :
+     New_Transaction = History(Access_Token=Final_Token, Creation_Date = datetime.utcnow(), Method_Used=request.method, Task_Done=session.get('Task_Done'))
+     db.session.add(New_Transaction)
+     db.session.commit()
   return response
+
+@app.before_first_request
+def before_first_request_func():
+    Final_Token = session.get('Token')
+    if session.get('Task_Done') == "Logged out" :
+        New_Transaction = History(Access_Token=Final_Token, Creation_Date=datetime.utcnow(), Method_Used=request.method,Task_Done=session.get('Task_Done'))
+        db.session.add(New_Transaction)
+        db.session.commit()
+
+
 
 if __name__ == '__main__':
   app.run(debug=True, use_debugger=True, use_reloader=True)
