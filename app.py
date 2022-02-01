@@ -52,6 +52,10 @@ def after_request_func(response):
 @app.before_first_request
 def before_first_request_func():
     Final_Token = session.get('Token')
+    if session.get('Task_Done') == None:
+        session['Task_Done'] = ""
+    if session.get('Token') == None:
+        Final_Token = "Visitor"
     if session.get('Task_Done') == "Logged out" :
         New_Transaction = History(Access_Token=Final_Token, Creation_Date=datetime.utcnow(), Method_Used=request.method,Task_Done=session.get('Task_Done'))
         db.session.add(New_Transaction)
