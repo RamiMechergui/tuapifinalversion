@@ -7,6 +7,24 @@ from models.model import *
 from requests import get
 from app import app
 
+def secret_key_required(f):
+   @wraps(f)
+   def decorated(*args, **kwargs):
+      secret_key = None
+      # jwt is passed in the request header
+      if 'secret_key' in request.headers:
+         secret_key = request.headers['secret_key']
+      # return 401 if token is not passed
+      if not secret_key:
+         return jsonify({'Response' : 'secret key is missing'}), 401
+      if secret_key == app.config['SECRET_KEY']:
+          current_user="admin"
+      else :
+          return jsonify({'Response': 'invalid secret key '}),401
+      # returns the current logged in users contex to the routes
+      return f(current_user,*args, **kwargs)
+   return decorated
+
 def token_required(f):
    @wraps(f)
    def decorated(*args, **kwargs):
@@ -218,7 +236,8 @@ def Get_Number_Per_100(current_user):
     X= Private_Vs_Public.query.all()[2]
     session['Task_Done'] = "View N-of-Stu-per-100-inhabitant"
     return jsonify({"Number of students per 100 thousand inhabitants": [{"2014_2015": X.N_2014_2015},{"2015_2016": X.N_2015_2016},{"2016_2017": X.N_2016_2017},{"2017_2018": X.N_2017_2018},{"2018_2019": X.N_2018_2019},{"2019_2020": X.N_2019_2020}]})
-def DeleteUser():
+@secret_key_required
+def DeleteUser(current_user):
     email = request.args.get('email')
     try:
        User.query.filter_by(email=email).delete()
@@ -227,7 +246,9 @@ def DeleteUser():
        return jsonify({"Response": "User Deleted Sucessfully"})
     except:
        return jsonify({"Response": "Something went wrong User is not deleted"})
-def Manipulate_data(Univ):
+
+@secret_key_required
+def Manipulate_data(current_user,Univ):
     year1 = request.args.get('year1')
     year2 = request.args.get('year2')
     New_Stat = request.args.get('New_Stat')
@@ -238,7 +259,9 @@ def Manipulate_data(Univ):
         return jsonify({"response":"Item modified Sucessfully"})
     except :
         return jsonify({"Response":"Something went wrong"})
-def Manipulate_data_2(Rates_N):
+
+@secret_key_required
+def Manipulate_data_2(current_user,Rates_N):
     year1 = request.args.get('year1')
     year2 = request.args.get('year2')
     New_Stat = request.args.get('New_Stat')
