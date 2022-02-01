@@ -4,6 +4,7 @@ from functools import wraps
 from forms import LoginForm, Admin_Login, RegistrationForm
 from flask import render_template, url_for, flash, redirect, make_response, session, request, jsonify
 from models.model import *
+from requests import get
 from app import app
 
 def token_required(f):
@@ -38,7 +39,10 @@ def OAuth(Token):
           M = [S for S in History.query.all() if S.Access_Token == session.get('Token')]
           HS = History.query.all()
           session['Task_Done'] = "Successfully Logged in"
-          return make_response(render_template('index.html', Page="", Authenticated=True, id=N[0].id, username=N[0].username ,M=M ,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
+          ip = get('https://ipapi.co/ip/').text
+          city = get('https://ipapi.co/city/').text
+          country = get('https://ipapi.co/country/').text
+          return make_response(render_template('index.html',ip=ip,city=city,email = email,country=country.lower(), Page="", Authenticated=True, id=N[0].id, username=N[0].username ,M=M ,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
     except:
             return make_response(redirect('/index'))
 def Main():
