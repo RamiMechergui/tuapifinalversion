@@ -57,10 +57,12 @@ def OAuth(Token):
           M = [S for S in History.query.all() if S.Access_Token == session.get('Token')]
           HS = History.query.all()
           session['Task_Done'] = "Successfully Logged in"
-          ip = get('https://ipapi.co/ip/').text
-          city = get('https://ipapi.co/city/').text
-          country = get('https://ipapi.co/country/').text
-          return make_response(render_template('index.html',ip=ip,city=city,email = email,country=country.lower(), Page="", Authenticated=True, id=N[0].id, username=N[0].username ,M=M ,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
+          Data = get('http://api.ipstack.com/160.158.50.178?access_key=ac2558df3b313cb4f3d0d641e9bd615a&format=1').json()
+          ip = Data['ip']
+          city = Data['city']
+          country = Data['country_name']
+          country_code = Data['country_code']
+          return make_response(render_template('index.html',country_code=country_code,ip=ip,city=city,email = email,country=country, Page="", Authenticated=True, id=N[0].id, username=N[0].username ,M=M ,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
     except:
             return make_response(redirect('/index'))
 def Main():
