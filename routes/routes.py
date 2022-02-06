@@ -57,7 +57,7 @@ def OAuth(Token):
           M = [S for S in History.query.all() if S.Access_Token == session.get('Token')]
           HS = History.query.all()
           session['Task_Done'] = "Successfully Logged in"
-          Data = get('http://api.ipstack.com/160.158.50.178?access_key=ac2558df3b313cb4f3d0d641e9bd615a&format=1').json()
+          Data = get('http://api.ipstack.com/160.158.50.178?access_key=e15791913e4b4ab47fea06c5478958c4').json()
           ip = Data['ip']
           city = Data['city']
           country = Data['country_name']
