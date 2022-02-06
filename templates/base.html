@@ -19,8 +19,7 @@
 <body>
 <nav class="navbar navbar-light " style="background-color: #e3f2fd;padding-bottom:0px;">
     <!-- Navbar content -->
-    <div class="container" style="max-width: 100%;" }
-    ">
+    <div class="container" style="max-width: 100%;">
     <a class="navbar-brand" href="#">
         <img src="{{ url_for('static',filename='TU-API.svg') }}" alt="" width="70" height="80">
         <div class="badge bg-primary text-wrap" style="width: 6rem;">
@@ -77,7 +76,8 @@
                     <li>
                         <a class="dropdown-item text-wrap" href="#" data-bs-toggle="modal"
                            data-bs-target="#VerifyAccount">
-                            ٍVerify My Account </a>
+                            ٍVerify My Account
+                        </a>
                     </li>
                 {% endif %}
                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#MyHistory"> History </a>
@@ -136,7 +136,6 @@
 
                         </tr>
                         </thead>
-                        <tbody>
                         {% with ns = namespace(x=-1) %}
                             {% for item in M %}
                                 <tr class="row">
@@ -154,7 +153,6 @@
                                 {% set ns.x=ns.x-1 %}
                             {% endfor %}
                         {% endwith %}
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -224,22 +222,28 @@
                         <h4> You're on your way! Let's confirm your email address. </h4>
                         <div class="mb-3 row">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-7">
                                 <input type="text" readonly class="form-control-plaintext" id="staticEmail"
                                        value={{ email }}>
+                            </div>
+                            <div class="col-sm-3">
+                                <form action="/Confirmation" method="POST" id="Confirmation_form">
+                                    <button type="submit" class="btn btn-primary" id="Confirmation_Button"> send </button>
+                                </form>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="staticEmail" class="col-sm-5 col-form-label"> Confirmation Code </label>
                             <div class="col-sm-7">
-                                <input type="text text-center"  class="form-control-plaintext" id="Confirmation Code"
-                                       value="" placeholder="Put confirmation code here ...">
+                                <input type="text text-center" class="form-control-plaintext" id="Confirmation_Input" value="" placeholder="Put confirmation code here ...">
                             </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <form action="/verified_email" method="POST">
+                        <button type="submit" class="btn btn-secondary" id = 'Validate_Button' data-bs-dismiss="modal" disabled> Validate </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -264,8 +268,43 @@
         </button>
     </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+    $(document).on('submit','#Confirmation_form',function(e)
+                   {
+      e.preventDefault();
+      $.ajax({
+        type:'POST',
+        url:'/Confirmation',
+        data:{
+          todo:$("#Confirmation_Input").val()
+        },
+        success:function()
+        {
+          $("#Confirmation_Button").addClass("btn-success");
+          $("#Confirmation_Button").text("Code sent");
+          $("#Confirmation_Button").prop('disabled', true);
+        }
+      })
+    });
+  </script>
+  <script>
+      document.getElementById("Confirmation_Input").onkeyup = function() {Verifier()};
+      function Verifier() {
+          let Verification_Code = {{ Verification_Code }} ;
+          let input= document.getElementById("Confirmation_Input");
+          if (input.value == Verification_Code) {
+               input.style.backgroundColor = 'green';
+               document.getElementById("Validate_Button").disabled = false;
+          }else{
+               input.style.backgroundColor = 'red';
+          }
+      }
+  </script>
+
 </body>
 </html>
