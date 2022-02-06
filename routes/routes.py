@@ -1,3 +1,4 @@
+import random
 import jwt
 from datetime import datetime, timedelta
 from functools import wraps
@@ -46,7 +47,6 @@ def token_required(f):
       return f(current_user, *args, **kwargs)
    return decorated
 def OAuth(Token):
-    try:
         data = jwt.decode(Token, app.config['SECRET_KEY'], algorithms=["HS256"])
         email = data['email']
         password = data['password']
@@ -57,14 +57,14 @@ def OAuth(Token):
           M = [S for S in History.query.all() if S.Access_Token == session.get('Token')]
           HS = History.query.all()
           session['Task_Done'] = "Successfully Logged in"
-          Data = get('http://api.ipstack.com/160.158.50.178?access_key=ac2558df3b313cb4f3d0d641e9bd615a&format=1').json()
+          session['Verification_Code'] = str(random.randint(1000,9999))
+          Data = get('http://api.ipstack.com/160.158.50.178?access_key=e15791913e4b4ab47fea06c5478958c4').json()
           ip = Data['ip']
           city = Data['city']
           country = Data['country_name']
           country_code = Data['country_code']
-          return make_response(render_template('index.html',country_code=country_code,ip=ip,city=city,email = email,country=country, Page="", Authenticated=True, id=N[0].id, username=N[0].username ,M=M ,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
-    except:
-            return make_response(redirect('/index'))
+        return make_response(render_template('index.html',Verification_Code=session.get('Verification_Code'),Status = N[0].Status,country_code=country_code,ip=ip,city=city,email = email,country=country, Page="", Authenticated=True, id=N[0].id, username=N[0].username ,M=M ,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
+
 def Main():
     try:
         if session.get('Token') != None:
@@ -261,6 +261,12 @@ def Manipulate_data(current_user,Univ):
         return jsonify({"response":"Item modified Sucessfully"})
     except :
         return jsonify({"Response":"Something went wrong"})
+
+def Verified_Email():
+    User.query.filter_by(email=session.get('email')).first().__setattr__("Status", "verified")
+    db.session.commit()
+    x = "/OAuth/{}".format(session.get('Token'))
+    return redirect(x)
 
 @secret_key_required
 def Manipulate_data_2(current_user,Rates_N):

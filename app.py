@@ -20,7 +20,7 @@ app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
 from models.model import History, Private_Vs_Public , N_Student_Per_University , Annual_Cost_Per_Student , rates , User
-from routes.routes import CostPerStudent , Get_Total_Number_Of_Students , Get_Number , Get_Number_Per_100 , Manipulate_data , Get_Rates_Of_Specidifc_Status , specific , Cost , DeleteUser , Manipulate_data_2 , OAuth, Main , index , k , ReturnToken , login , log_out , Sign_Up , list_of_universities , Get_Universiy_Data , List_Rates , admin
+from routes.routes import Verified_Email ,CostPerStudent , Get_Total_Number_Of_Students , Get_Number , Get_Number_Per_100 , Manipulate_data , Get_Rates_Of_Specidifc_Status , specific , Cost , DeleteUser , Manipulate_data_2 , OAuth, Main , index , k , ReturnToken , login , log_out , Sign_Up , list_of_universities , Get_Universiy_Data , List_Rates , admin
 
 app.add_url_rule('/OAuth/<string:Token>', view_func=OAuth, methods=['GET', 'POST'])
 app.add_url_rule('/', view_func=Main, methods=['GET', 'POST'])
@@ -48,7 +48,7 @@ app.add_url_rule('/verified_email',view_func=Verified_Email,methods=['POST'])
 
 @app.route('/Confirmation',methods=['POST'])
 def Send_Confirmation_Code():
-    msg = Message('Email Confirmation ', sender=('TU API','street.cherk@gmail.com') , recipients=[session.get('email')])
+    msg = Message('Email Confirmation',sender=('TU API','street.cherk@gmail.com'),recipients=[session.get('email')])
     msg.html = render_template('Email_Confirmation.html',username=session.get('username'),Verification_Code=session.get('Verification_Code'))
     mail.send(msg)
     return ''

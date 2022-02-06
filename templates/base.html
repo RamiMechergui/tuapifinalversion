@@ -61,8 +61,8 @@
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-bs-toggle="dropdown" aria-expanded="false">
                 {{ username }}
-                <span {% if status != 'verified' %} class="badge bg-danger" {% endif %}{% if status == 'verified' %}
-                                                    class="badge bg-success" {% endif %}> {{ status }} </span>
+                <span {% if Status != 'verified' %} class="badge bg-danger" {% endif %}{% if Status == 'verified' %}
+                                                    class="badge bg-success" {% endif %}> {{ Status }} </span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item text-wrap" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -72,7 +72,7 @@
                        data-bs-target="#PersonalInformation">
                         ٍView Personal Information </a>
                 </li>
-                {% if status != 'verified' %}
+                {% if Status != 'verified' %}
                     <li>
                         <a class="dropdown-item text-wrap" href="#" data-bs-toggle="modal"
                            data-bs-target="#VerifyAccount">
