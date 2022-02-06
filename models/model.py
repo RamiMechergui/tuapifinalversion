@@ -48,3 +48,4 @@ class User(db.Model):
     password = db.Column(db.String(60), nullable=False)
     Access_Token = db.Column(db.String(20), unique=True, nullable=False)
     Creation_Date = db.Column(db.String(120), nullable=False)
+    Status = db.Column(db.String(20), nullable=True,default="Not verified")

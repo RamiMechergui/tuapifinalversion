@@ -79,11 +79,12 @@
         ">
         <thead>
         <tr>
-            <th scope="col"> ID</th>
-            <th scope="col"> Username</th>
-            <th scope="col"> Email</th>
-            <th scope="col"> Password</th>
-            <th scope="col"> Creation_Date</th>
+            <th scope="col"> ID </th>
+            <th scope="col"> Username </th>
+            <th scope="col"> Email </th>
+            <th scope="col"> Password </th>
+            <th scope="col"> Creation_Date </th>
+            <th scope="col"> Status </th>
         </tr>
         </thead>
         <tbody>
@@ -94,6 +95,7 @@
                 <td> {{ item.email }} </td>
                 <td> {{ item.password }} </td>
                 <td> {{ item.Creation_Date }} </td>
+                <td> {{ item.Status }} </td>
             </tr>
         {% endfor %}
         </tbody>

@@ -53,6 +53,7 @@ def OAuth(Token):
         N = User.query.filter_by(email=email)
         if N[0].email == email and N[0].password == password:
           session['Token'] = Token
+          status = N[0].Status
           session['username'] = data['username']
           M = [S for S in History.query.all() if S.Access_Token == session.get('Token')]
           HS = History.query.all()
@@ -62,7 +63,7 @@ def OAuth(Token):
           city = Data['city']
           country = Data['country_name']
           country_code = Data['country_code']
-          return make_response(render_template('index.html',country_code=country_code,ip=ip,city=city,email = email,country=country, Page="", Authenticated=True, id=N[0].id, username=N[0].username ,M=M ,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
+          return make_response(render_template('index.html',status=status,country_code=country_code,ip=ip,city=city,email = email,country=country, Page="", Authenticated=True, id=N[0].id, username=N[0].username ,M=M ,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
     except:
             return make_response(redirect('/index'))
 def Main():
