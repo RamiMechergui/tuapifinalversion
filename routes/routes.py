@@ -4,7 +4,6 @@ from functools import wraps
 from forms import LoginForm, Admin_Login, RegistrationForm
 from flask import render_template, url_for, flash, redirect, make_response, session, request, jsonify
 from models.model import *
-import random
 from requests import get
 from app import app
 
@@ -47,26 +46,25 @@ def token_required(f):
       return f(current_user, *args, **kwargs)
    return decorated
 def OAuth(Token):
+    try:
         data = jwt.decode(Token, app.config['SECRET_KEY'], algorithms=["HS256"])
         email = data['email']
         password = data['password']
         N = User.query.filter_by(email=email)
         if N[0].email == email and N[0].password == password:
           session['Token'] = Token
-          session['email'] = email
-          status = N[0].Status
           session['username'] = data['username']
           M = [S for S in History.query.all() if S.Access_Token == session.get('Token')]
           HS = History.query.all()
           session['Task_Done'] = "Successfully Logged in"
-          session['Verification_Code'] = str(random.randint(1000, 9999))
-          Data = get('http://api.ipstack.com/160.158.50.178?access_key=e15791913e4b4ab47fea06c5478958c4').json()
+          Data = get('http://api.ipstack.com/160.158.50.178?access_key=ac2558df3b313cb4f3d0d641e9bd615a&format=1').json()
           ip = Data['ip']
           city = Data['city']
           country = Data['country_name']
           country_code = Data['country_code']
-          return make_response(render_template('index.html',Verification_Code=session.get('Verification_Code'),status=status,country_code=country_code,ip=ip,city=city,email = email,country=country, Page="", Authenticated=True, id=N[0].id, username=N[0].username ,M=M ,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
-
+          return make_response(render_template('index.html',country_code=country_code,ip=ip,city=city,email = email,country=country, Page="", Authenticated=True, id=N[0].id, username=N[0].username ,M=M ,access_token=N[0].Access_Token, password=N[0].password, Title=session.get('username'),History=HS))
+    except:
+            return make_response(redirect('/index'))
 def Main():
     try:
         if session.get('Token') != None:
@@ -183,7 +181,6 @@ def List_Rates(current_user):
     except:
         session['Task_Done'] = "failed to get the list of rates"
         return jsonify({"Response":"Failed to get the list of rates"})
-
 @token_required
 def Get_Rates_Of_Specidifc_Status(current_user,status):
     for item in rates.query.all():
@@ -252,14 +249,6 @@ def DeleteUser(current_user):
     except:
        return jsonify({"Response": "Something went wrong User is not deleted"})
 
-def Verified_Email():
-    User.query.filter_by(email=session.get('email')).first().__setattr__("Status", "verified")
-    db.session.commit()
-    x = "/OAuth/{}".format(session.get('Token'))
-    return redirect(x)
-
-
-
 @secret_key_required
 def Manipulate_data(current_user,Univ):
     year1 = request.args.get('year1')
@@ -272,7 +261,6 @@ def Manipulate_data(current_user,Univ):
         return jsonify({"response":"Item modified Sucessfully"})
     except :
         return jsonify({"Response":"Something went wrong"})
-
 
 @secret_key_required
 def Manipulate_data_2(current_user,Rates_N):
