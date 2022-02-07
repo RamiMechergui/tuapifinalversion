@@ -1,6 +1,8 @@
 from flask import Flask, session, request ,render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
+from mailjet_rest import Client
+import os
 import random
 
 from datetime import datetime
@@ -10,17 +12,11 @@ app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TU.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
+
 db = SQLAlchemy(app)
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'street.cherk@gmail.com'
-app.config['MAIL_PASSWORD'] = '54811289Rami'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-mail = Mail(app)
 
 from models.model import History, Private_Vs_Public , N_Student_Per_University , Annual_Cost_Per_Student , rates , User
-from routes.routes import Verified_Email ,CostPerStudent , Get_Total_Number_Of_Students , Get_Number , Get_Number_Per_100 , Manipulate_data , Get_Rates_Of_Specidifc_Status , specific , Cost , DeleteUser , Manipulate_data_2 , OAuth, Main , index , k , ReturnToken , login , log_out , Sign_Up , list_of_universities , Get_Universiy_Data , List_Rates , admin
+from routes.routes import Send_Confirmation_Code,verified_email,CostPerStudent , Get_Total_Number_Of_Students , Get_Number , Get_Number_Per_100 , Manipulate_data , Get_Rates_Of_Specidifc_Status , specific , Cost , DeleteUser , Manipulate_data_2 , OAuth, Main , index , k , ReturnToken , login , log_out , Sign_Up , list_of_universities , Get_Universiy_Data , List_Rates , admin
 
 app.add_url_rule('/OAuth/<string:Token>', view_func=OAuth, methods=['GET', 'POST'])
 app.add_url_rule('/', view_func=Main, methods=['GET', 'POST'])
@@ -44,14 +40,9 @@ app.add_url_rule('/admin', view_func=admin,  methods=['GET', 'POST'])
 app.add_url_rule('/admin/users/delete', view_func=DeleteUser,  methods=['DELETE'])
 app.add_url_rule('/admin/<string:Univ>', view_func=Manipulate_data,  methods=['PUT'])
 app.add_url_rule('/admin/rates/<string:Rates_N>', view_func=Manipulate_data_2,  methods=['PUT'])
-app.add_url_rule('/verified_email',view_func=Verified_Email,methods=['POST'])
+app.add_url_rule('/verified_email',view_func=verified_email,methods=['POST'])
+app.add_url_rule('/Confirmation',view_func=Send_Confirmation_Code,methods=['POST'])
 
-@app.route('/Confirmation',methods=['POST'])
-def Send_Confirmation_Code():
-    msg = Message('Email Confirmation',sender=('TU API','street.cherk@gmail.com'),recipients=[session.get('email')])
-    msg.html = render_template('Email_Confirmation.html',username=session.get('username'),Verification_Code=session.get('Verification_Code'))
-    mail.send(msg)
-    return ''
 
 
 @app.after_request

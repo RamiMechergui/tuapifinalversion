@@ -6,7 +6,7 @@ from forms import LoginForm, Admin_Login, RegistrationForm
 from flask import render_template, url_for, flash, redirect, make_response, session, request, jsonify
 from models.model import *
 from requests import get
-from app import app
+from app import app,db
 
 def secret_key_required(f):
    @wraps(f)
@@ -155,7 +155,7 @@ def Sign_Up():
 @token_required
 def list_of_universities(current_user):
     session['Task_Done'] = "Getting the list of universities"
-    List = [university.University_Name.strip() for unviversity in N_Student_Per_University.query.all()]
+    List = [university.University_Name.strip() for university in N_Student_Per_University.query.all()]
     session['Task_Done'] = "View List of Universtites"
     return jsonify({'List of tunisian univeristies': List})
 @token_required
@@ -262,11 +262,47 @@ def Manipulate_data(current_user,Univ):
     except :
         return jsonify({"Response":"Something went wrong"})
 
-def Verified_Email():
-    User.query.filter_by(email=session.get('email')).first().__setattr__("Status", "verified")
+def verified_email():
+    D = User.query.filter_by(email=session.get('email')).first()
+    D.Status = 'verified'
     db.session.commit()
     x = "/OAuth/{}".format(session.get('Token'))
     return redirect(x)
+
+def Send_Confirmation_Code():
+    '''
+    msg = Message('Email Confirmation',sender=('TU API','street.cherk@gmail.com'),recipients=[session.get('email')])
+    msg.html = render_template('Email_Confirmation.html',username=session.get('username'),Verification_Code=session.get('Verification_Code'))
+    mail.send(msg)
+    '''
+    api_key = 'bc4b82cfffbb6ac3450ec4d04290c947'
+    api_secret = 'fb91a20a85a7fdc0eedbd9c494d50bde'
+    mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+    data = {
+        'Messages': [
+            {
+                "From": {
+                    "Email": "street.cherk@gmail.com",
+                    "Name": "TU API"
+                },
+                "To": [
+                    {
+                        "Email": session.get('email'),
+                        "Name": session.get('username')
+                    }
+                ],
+                "Subject": "Confirmation Email",
+                "TextPart": "My first Mailjet email",
+                "HTMLPart": "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!",
+                "CustomID": "AppGettingStartedTest"
+            }
+        ]
+    }
+    result = mailjet.send.create(data=data)
+    print (result.status_code)
+    print (result.json())
+    return 'Sent Successfully'
+
 
 @secret_key_required
 def Manipulate_data_2(current_user,Rates_N):
